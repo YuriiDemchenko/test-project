@@ -43,17 +43,14 @@ describe("gitHub page test", () => {
         await expect(newsletterPage.newsLetterPageHeader).toHaveText('Thanks for subscribing!');
     });
 
-    it.only("Search result test", async () => {
-        let searchValue = 'arc1111';
+    it("Search result test", async () => {
+        let searchValue = 'arc';
         await browser.url('https://github.com');
         await mainPage.searchInputClick();
         await mainPage.searchInputSetValue(searchValue);
-        const searchResults = await searchResultPage.getSearchResults();
-
-        const hrefs = await Promise.all(searchResults.map(async (el) => await el.getAttribute('href')));
-
+        const hrefs = await searchResultPage.getSearchResultLinks();
         const hasMatch = hrefs.some(href => href.includes(searchValue));
-        expect(hasMatch).toBe(true);
+        await expect(hasMatch).toBe(true);
     });
 
     it("Pricing page test", async () => {

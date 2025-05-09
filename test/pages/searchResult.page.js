@@ -1,10 +1,24 @@
-class searchResultPage {
+class SearchResultPage {
 
-    async getSearchResults() {
-        return browser.waitUntil(async () => {
-            const searchResults = await $$("//div[contains(@class, 'search-title')]//a");
-            return searchResults.length > 0 ? searchResults : [];
-        }, { timeout: 5000, timeoutMsg: "Search results not found within 5 seconds" });
+    async getSearchResultLinks() {
+        // Waits until at least one search result link appears on the page
+        await browser.waitUntil(async () => {
+            const links = await $$("//div[contains(@class, 'search-title')]//a");
+            return links.length > 0; // Ensures we have results before proceeding
+        }, { timeout: 5000, timeoutMsg: "No links found within the specified time" });
+
+        // Fetches all <a> elements inside divs with class 'search-title'
+        const links = await $$("//div[contains(@class, 'search-title')]//a");
+
+        // Extracts href attributes from the collected elements
+        const hrefs = [];
+        for (const link of links) {
+            const href = await link.getAttribute('href'); // Retrieves the href value
+            hrefs.push(href); // Stores it in the array
+        }
+
+        return hrefs; // Returns all hrefs found
     }
 }
-export default new searchResultPage();
+
+export default new SearchResultPage();
