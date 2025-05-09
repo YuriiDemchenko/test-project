@@ -6,6 +6,8 @@ class mainPage {
     get subscribeButton() { return $('.btn-mktg') }
     get searchBox() { return $('.search-input') }
     get searchBoxInput() { return $('#query-builder-test') }
+    get pricingButton() { return $("//a[@href='https://github.com/pricing']") }
+
 
     async clickSignupButton() {
         await this.signupButton.click();
@@ -37,6 +39,9 @@ class mainPage {
         await browser.keys(['Enter']);
     }
 
-}
+    async clickPricingButton() {
+        await this.pricingButton.click();
+    }
 
+}
 export default new mainPage();

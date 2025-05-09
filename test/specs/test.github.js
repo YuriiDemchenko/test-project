@@ -3,7 +3,7 @@ import signupPage from "../pages/signup.page";
 import copilotPage from "../pages/copilot.page";
 import newsletterPage from "../pages/newsletter.page";
 import searchResultPage from "../pages/searchResult.page";
-
+import pricingPage from "../pages/pricing.page";
 
 
 describe("gitHub page test", () => {
@@ -54,6 +54,14 @@ describe("gitHub page test", () => {
 
         const hasMatch = hrefs.some(href => href.includes(searchValue));
         expect(hasMatch).toBe(true);
+    });
+
+    it("Pricing page test", async () => {
+        await browser.url('https://github.com');
+        await mainPage.clickPricingButton();
+        await expect(pricingPage.pricingHeader).toHaveText('Try the Copilot-powered platform');
+        await pricingPage.compareFeaturesLinkScroll();
+        await expect(pricingPage.compareFeaturesTitle).toHaveText('Compare features');
     });
 
 });
